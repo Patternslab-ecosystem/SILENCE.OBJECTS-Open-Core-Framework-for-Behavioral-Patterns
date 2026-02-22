@@ -1,196 +1,156 @@
-# Business \& Monetization Overview
 
-Model biznesowy: **buyer‑based open‑core**
+# Business & Monetization Overview
 
-SILENCE.OBJECTS operuje w modelu buyer‑based open‑core – tym samym, który stoi za sukcesem GitLab, Redis, Elastic i innych dojrzałych projektów open‑source. Cała warstwa fundamentalna (kontrakty, pakiety `@silence/*`, referencyjna aplikacja PatternLens) jest publicznie dostępna na licencji MIT.[^1]
+## Business model: buyer‑based open‑core
 
-To jest świadoma decyzja strategiczna:
+SILENCE.OBJECTS uses a **buyer‑based open‑core** model. The foundational layer of the system (type and event contracts, `@silence/*` packages, and the reference PatternLens application) is available under the MIT license.
 
-- buduje ekosystem developerów i researcherów wokół spójnego frameworka,
-- ustanawia SILENCE.OBJECTS jako **de facto standard** dla strukturalnej analizy wzorców behawioralnych,
-- tworzy naturalny lejek konwersji do płatnych warstw enterprise, kiedy pojawia się potrzeba skali, governance i compliance.[^2][^1]
+This is intentional:
 
-Wartość komercyjna powstaje tam, gdzie kończą się możliwości „samodzielnego hackowania” na open‑core, a zaczyna się realna odpowiedzialność za ludzi, organizacje i regulatorów – czyli w warstwie enterprise.[^1]
+- it builds an ecosystem of developers and researchers around a coherent, well‑documented framework,
+- it positions SILENCE.OBJECTS as a default standard for **non‑clinical structural analysis of behavioral patterns**,
+- it creates a natural conversion path to paid, enterprise‑grade layers when organizations need scale, governance, and compliance.
+
+Commercial value appears exactly where DIY usage of the open‑core stops being enough and where **real responsibility** begins: for people, teams, organizations, and regulators.
 
 ***
 
-## Architektura wartości: gdzie zarabiamy
+## Value architecture: where we monetize
 
-Warstwa open‑core (MIT):
+**Open‑core layer (MIT, public):**
 
-- kontrakty typów i eventów (`@silence/contracts`),
-- moduły analizy wzorców (`@silence/behavioral-sequences`, `@silence/rhythmic-patterns`, `@silence/cognitive-load`, `@silence/capacity-recovery`, `@silence/attention-profiles`),
-- guardrails językowe S11 (`@silence/language`, `@silence/validator`),
+- type and event contracts (`@silence/contracts`),
+- pattern analysis modules (`@silence/behavioral-sequences`, `@silence/rhythmic-patterns`, `@silence/cognitive-load`, `@silence/capacity-recovery`, `@silence/attention-profiles`),
+- S11 language guardrails (`@silence/language`, `@silence/validator`),
 - design system (`@silence/ui`),
-- referencyjna aplikacja PatternLens jako kliencka implementacja protokołów.[^3][^4][^1]
+- reference PatternLens client as a concrete implementation of the protocols.
 
-Warstwa enterprise (komercyjna, closed):
+**Enterprise layer (commercial, closed):**
 
-- **SILENCE Engine** – zintegrowana, produkcyjna wersja frameworka z pełnym wsparciem AI, predykcją i orkiestracją (`ee/@silence/behavioral-engine`, `ee/@silence/ai`, `ee/@silence/predictive`, `ee/@silence/safety`, `ee/@silence/orchestrator`).[^1]
-- **Portal** – konsola zarządcza dla organizacji (monitoring, billing, compliance, audyt).[^5][^1]
-- **PatternsLab** – platforma badawczo‑analityczna dla instytucji i zespołów B2B (widoki zagregowane, analizy trendów, governance danych).[^1]
+- **SILENCE Engine** – the integrated, production‑ready version of the framework with AI, prediction, and orchestration (`ee/@silence/behavioral-engine`, `ee/@silence/ai`, `ee/@silence/predictive`, `ee/@silence/safety`, `ee/@silence/orchestrator`, and others),
+- **Portal** – management console for organizations (monitoring, billing, compliance, audit),
+- **PatternsLab** – analytics and research platform for teams and institutions (aggregations, trends, governance).
 
-To rozdzielenie kodu jest wymuszone przez architekturę monorepo: katalog `packages/` to open‑core, katalog `ee/` to closed modules – usunięcie `ee/` nie łamie kompilacji open‑core (ADR004).[^1]
+The monorepo enforces this separation by design: `packages/` contains open‑core modules, `ee/` contains closed modules. Removing `ee/` does not break open‑core compilation.
 
 ***
 
-## Trzy poziomy monetyzacji
+## Three monetization tiers
 
 ### 1. PatternLens PRO (B2C / prosumer)
 
-PatternLens to nasza flagowa aplikacja referencyjna – voice‑first, offline‑first, z interfejsem projektowanym dla neuroatypowych użytkowników (ciemny tryb, monospace, brak bodźców „gamifikacyjnych”). Wersja FREE jest w pełni funkcjonalna i buduje zaufanie: pełny 4‑fazowy raport (Context, Tension, Meaning, Function), safety, archiwum w ograniczonym horyzoncie.[^6][^2][^3]
+PatternLens is the flagship reference application – voice‑first, offline‑first, designed for neuroatypical users (dark mode, monospace, no gamification).
 
-Wersja PRO oferuje m.in.:
+The **FREE** tier is genuinely usable and trust‑building:
 
-- dłuższy horyzont czasowy – archiwum interpretacji sięgające do 24 miesięcy,
-- pełną historię „Ghost Patterns” – śledzenie ewolucji wzorców w czasie na poziomie strukturalnych wskaźników (cykle, napięcia, capacity),
-- rozszerzone możliwości eksportu danych i raportów – do własnych analiz lub do współpracy z zewnętrznym coach’em / terapeutą (bez wbudowanej funkcji terapii).[^6][^1]
+- full 4‑phase reports (Context, Tension, Meaning, Function),
+- safety features,
+- limited archive horizon.
 
-**Model cenowy:**
+The **PRO** tier adds:
 
-- subskrypcja miesięczna: **49 PLN** (poziom prosumer, porównywalny z narzędziami typu „productivity+AI”),[^7]
-- opcjonalne pakiety AI credits dla power‑userów (dodatkowe interpretacje, alternatywy, dłuższe raporty).
+- extended archive horizon (up to 24 months of interpretations),
+- full “Ghost Patterns” history – structural indicators over time (cycles, tensions, capacity),
+- advanced export and reporting for personal analysis or work with external professionals (without any built‑in therapy functions).
 
-Zasada przewodnia dla PatternLens PRO: **„więcej widoczności w czasie, nie więcej opieki”** – produkt nie udaje terapii, nie składa obietnic poprawy samopoczucia, a jedynie zwiększa rozdzielczość wglądu w własne mechanizmy poprzez strukturę i historię wzorców.[^2][^3]
 
-***
-
-### 2. PatternsLab \& Portal (B2B / teams / orgs)
-
-PatternsLab to platforma dla zespołów, organizacji i instytucji, które chcą pracować na zbiorczych sygnałach z pracy i współpracy – w sposób zgodny z EU AI Act (limited‑risk) i GDPR.[^5][^1]
-
-Oferuje:
-
-- widoki zagregowane (capacity, napięcia, rytmy) z anonimizacją (np. N ≥ 3 lub wyższe progi, zgodnie z polityką instytucji),
-- analizę trendów zespołowych, bez możliwości „rankingowania” jednostek czy wnioskowania o stanie zdrowia konkretnych osób,
-- pełną obsługę compliance: RLS (row‑level security), audit trail, role‑based access, deklaracje safety profile, automatyczne generowanie fragmentów Technical File pod EU AI Act,[^5][^1]
-- integracje z systemami HR / ops (kalendarium, ticketing, narzędzia komunikacyjne) – w modelu enterprise.
-
-Portal jest warstwą zarządczą:
-
-- metryki użycia oraz koszty wywołań AI (budżety, quota, killswitch),
-- przegląd zgód i konfiguracji privacy / safety,
-- zarządzanie tenantami, rolami i poziomem szczegółowości dostępnych danych.[^5][^1]
-
-**Model cenowy:**
-
-- licencje tenant‑based:
-    - stała opłata miesięczna za organizację (zależna od liczby zespołów / rozmiaru tenant’a),
-- komponent usage‑based:
-    - wolumen eventów (np. liczba zapisanych Objectów, generowanych interpretacji),
-    - liczba aktywnych użytkowników miesięcznie (aktywni uczestnicy).[^7]
-
-To daje klientowi przewidywalność (stała baza) i elastyczność (rośnie, gdy rośnie adopcja), a nam – skalowalność przychodów bez agresywnych podwyżek cen.
+Guiding principle for PatternLens PRO: **“more visibility over time, not more care”**. The product does not present itself as therapy, does not make wellbeing promises, and focuses only on increasing structural visibility into one’s own mechanisms.
 
 ***
 
-### 3. Enterprise Engine \& Integrations
+### 2. PatternsLab & Portal (B2B / teams & organizations)
 
-Najwyższa warstwa monetyzacji to wdrożenia partnerskie, w których SILENCE Engine działa jako warstwa analityczna pod istniejące systemy klienta.
+PatternsLab is a platform for teams and institutions that need to work with aggregated signals from work and collaboration, under **EU AI Act limited‑risk** and **GDPR** constraints.
 
-Przykładowe scenariusze:
+It provides:
 
-- **HR tech** – analiza wzorców obciążenia i ryzyka wypalenia w zespołach, oparta na danych behawioralnych (eventy pracy i współpracy), z pełną zgodnością z EU AI Act i politykami HR (brak klasyfikacji klinicznych, brak „flagowania” osób).[^2][^1]
-- **platformy wellbeing‑adjacent** – dostarczenie strukturalnych wskaźników capacity, napięć i rytmów jako uzupełnienie istniejących metryk (bez wchodzenia w diagnozy czy „scoring zdrowia”).[^1]
-- **narzędzia badawcze** – dostęp do anonimizowanych, strukturalnych danych (sekwencje, rytmy, wskaźniki capacity, profile uwagi) na warunkach Academic Data Contract, z jasnym rozdziałem ról i odpowiedzialności regulacyjnej.[^1]
+- aggregated views (capacity, tensions, rhythms) with anonymization thresholds (e.g. N ≥ 3 or higher, configurable per client),
+- team trend analysis without ranking individuals or inferring health status,
+- full compliance support: row‑level security, audit trail, role‑based access, safety profile declarations, and automatic generation of documentation fragments required for AI governance,
+- integrations with HR / operations systems (calendars, ticketing, communication tools) in enterprise mode.
 
-**Rozliczanie:**
+Portal is the management layer on top:
 
-- **per użycie:**
-    - tokeny AI (wywołania modułu `silenceai` / LLM),
-    - liczba przetworzonych eventów / interpretacji / cykli analitycznych,[^7][^1]
-- **roczna opłata licencyjna:**
-    - za dostęp do closed modules (`silencepredictive`, `silenceintervention-timing`, `silenceanalytics-dashboard`, `silencebilling`, `silenceaudit`, itp.).[^1]
+- usage metrics and AI cost tracking (budgets, quotas, kill‑switch),
+- consent overview, privacy, and safety configuration,
+- tenant, role, and data‑granularity management.
 
-Tak zdefiniowany model pozwala sprzedawać Engine zarówno jako „wtyczkę analityczną” do istniejących systemów, jak i jako pełnoprawną platformę dla organizacji.
 
-***
-
-## Dźwignie wzrostu i przewagi konkurencyjne
-
-Z perspektywy inwestora kluczowe elementy modelu to:
-
-1. **Otwarty ekosystem jako lejek PLG**
-
-Im więcej developerów i researcherów używa open‑core (pakiety `@silence/*` + referencyjna PatternLens), tym większa jest baza instalacji i eksperymentów, z których naturalnie wyrastają projekty enterprise. To jest podręcznikowy PLG (product‑led growth): wejście jest darmowe, a płatne stają się dopiero potrzeby, których nie da się „zahackować” w zespole 1–2 osób.[^1]
-
-2. **Zgodność regulacyjna jako moat**
-
-SILENCE.OBJECTS od fundamentów jest projektowany pod EU AI Act (limited‑risk), GDPR i Data Act. W kontrakcie ramowym (00‑CONTRACT) i dokumentach S11 jasno deklarujemy:
-
-- brak funkcji diagnostycznych,
-- brak pattern‑detection w sensie klinicznym,
-- brak rekomendacji i „porad” – tylko strukturalne hipotezy.[^3][^2]
-
-Dla klientów instytucjonalnych to nie jest „miły dodatek”, tylko warunek startu. Nasza przewaga polega na tym, że te zasady są wbudowane w kontrakty, język i architekturę, nie „doczepione” po fakcie.[^5][^1]
-
-3. **Dane strukturalne zamiast surowych treści**
-
-Nie przechowujemy surowych treści użytkowników jako głównego zasobu – zamiast tego operujemy na wyabstrahowanych wzorcach: sekwencjach, rytmach, napięciach, sygnałach capacity i profilach uwagi. To:[^1]
-
-- radykalnie obniża ryzyko prywatnościowe,
-- ułatwia spełnienie wymogów privacy‑by‑design,
-- zmniejsza koszt compliance (mniej danych „high‑risk”, mniej restrykcji co do przechowywania i transferu).
-
-4. **Model hybrydowy (subskrypcja + usage‑based)**
-
-Połączenie subskrypcji (PatternLens PRO, licencje tenant‑based) z komponentem usage‑based (AI tokens, eventy, aktywni użytkownicy) daje:
-
-- powtarzalny MRR,
-- naturalny wzrost przychodów wraz z adopcją,
-- brak konieczności „windowania” cen co rok.[^7]
-
-To model znany z nowoczesnych AI‑SaaS (OpenAI, Vercel, Supabase) i dobrze rozumiany przez rynek.
-
-5. **Wyraźne granice między FREE a PRO/enterprise**
-
-W warstwie B2C:
-
-- FREE jest naprawdę używalne – pełny 4‑fazowy raport, safety, podstawowe archiwum.[^6]
-- PRO zwiększa zakres widoczności (czas, głębokość historii, narzędzia eksportu) i możliwości pracy z własnymi danymi, ale nie „przejmuje kontroli” nad użytkownikiem, nie stosuje dark patterns.[^3][^7]
-
-W warstwie B2B/enterprise:
-
-- jasny podział funkcjonalny między PatternsLab, Portal i Engine (opisany w 04‑PRODUCT‑RULES),
-- brak ukrytych paywalli w funkcjach bezpieczeństwa i zgodności (safety / S11 nie są „dodatkiem PRO”, tylko fundamentem).[^8][^2]
+This combination gives clients predictable base costs plus flexible scaling with adoption, without aggressive price increases.
 
 ***
 
-## Podsumowanie dla inwestora
+### 3. Enterprise Engine & Integrations
 
-SILENCE.OBJECTS to nie kolejna „mindfulness app”, ale infrastruktura dla ery neuroatypowości i przeciążenia informacyjnego: framework i Engine do nieklinicznej, strukturalnej analizy wzorców zachowania.[^2][^1]
+The highest tier consists of partnership deployments where the **SILENCE Engine** is integrated into existing client systems as an analytical layer.
 
-Model open‑core zapewnia:
+Typical scenarios:
 
-- **niski CAC** – społeczność developerów i researcherów buduje rozwiązania na naszym ekosystemie, co generuje popyt na warstwę enterprise,
-- **wysokie bariery wejścia** – zgodność regulacyjna i sterylność językowa S11 to lata pracy w kontraktach, języku i narzędziach (G1/G2), trudne do skopiowania „w kilka sprintów”,[^3][^5]
-- **skalowalność przychodów** – trzy poziomy monetyzacji (PatternLens PRO, PatternsLab/Portal, Enterprise Engine \& Integrations) z wyraźnymi ścieżkami upsellingu.[^7][^1]
+- **HR tech** – analyzing patterns of workload and burnout risk in teams based on behavioral data (work and collaboration events), without clinical classifications or “flagging” individuals.
+- **wellbeing‑adjacent platforms** – exposing structural indicators (capacity, tensions, rhythms) as an additional, non‑clinical signal alongside existing metrics.
+- **research tools** – access to anonymized, structural data (sequences, rhythms, capacity indicators, attention profiles) under an Academic Data Contract, with clear separation of roles and regulatory responsibilities.
 
-Rynek przesuwa się od „wellbeing apps” do systemów, które potrafią pokazać **strukturę** pracy, napięć i capacity bez wchodzenia w obszar medycyny czy terapii. SILENCE.OBJECTS jest zbudowane dokładnie na tę zmianę – z udokumentowanymi kontraktami, działającym open‑core i planem monetyzacji, który nie wymaga łamania zaufania użytkownika.
 
-Szczegółowe zasady monetyzacji rozwijają:
+This allows the Engine to be sold both as an “analytical plugin” for existing stacks and as the core of a full platform for organizations.
 
-- `04-MONETIZATION.md` – ramy modelu FREE / PRO / ENTERPRISE,[^7]
-- `04-PRODUCT-RULES.md` – granice funkcjonalne między wersjami,[^8]
-- `docs/strategy/MONETYZACJA_PATTERNLENS_2026.md` – szczegółowa strategia cenowa dla zespołu i inwestorów (work‑in‑progress, rozszerzany na podstawie danych z rynku).
+***
 
-Czy chcesz, żebym z tego tekstu zrobił też krótszą wersję 1‑stronicowego „Investment One‑Pager” (pod pitch deck)?
+## Growth levers and competitive advantages
 
-<div align="center">⁂</div>
+### 1. Open ecosystem as PLG funnel
 
-[^1]: SILENCE.OBJECTS-Moduly-Frameworka-Open-Source-i-Closed.md
+Open‑core (`@silence/*` packages + free PatternLens) lowers the barrier to entry. The more developers and researchers build on the framework, the more naturally enterprise‑level needs emerge. Only the requirements that cannot be satisfied by a 1–2 person “hack” on open‑core become paid.
 
-[^2]: 00-CONTRACT.md
+### 2. Regulatory compliance as a moat
 
-[^3]: S11-System-Sterylnosci-Jezykowej-SILENCE.OBJECTS.md
+SILENCE.OBJECTS is designed from day one for EU AI Act (limited‑risk), GDPR, and Data Act. Core contracts and S11 language rules encode non‑negotiable boundaries:
 
-[^4]: technical_runbook.md
+- no diagnostic functions,
+- no medical or psychological pattern detection,
+- no recommendations or “advice” – only structural hypotheses.
 
-[^5]: KONFIGURACJA-SRODOWISKA-PRODUKCYJNEGO-_-DEWELOPERSKIEGO-SILENCE.OBJECTS.docx
+For institutions, these are hard requirements. In SILENCE.OBJECTS they are part of the contracts, language, and architecture, not an afterthought.
 
-[^6]: SILENCE.OBJECTS-Operations.pdf
+### 3. Structural data, not raw content
 
-[^7]: 04-MONETIZATION.md
+The system does not treat raw user content as the primary asset. Instead, it focuses on **structural data**: sequences, rhythms, tensions, capacity signals, attention profiles. This:
 
-[^8]: 04-PRODUCT-RULES.md
+- reduces privacy risk,
+- simplifies privacy‑by‑design compliance,
+- lowers regulatory overhead (fewer high‑risk data surfaces).
 
+### 4. Hybrid revenue (subscription + usage‑based)
+
+Combining subscriptions (PatternLens PRO, tenant licenses) with usage‑based components (AI tokens, events, active users) provides:
+
+- predictable recurring revenue,
+- organic revenue growth as usage grows,
+- no need for frequent price hikes.
+
+This setup is familiar to the market from modern AI‑SaaS platforms.
+
+### 5. Clear boundaries between FREE and PRO / Enterprise
+
+In B2C:
+
+- FREE is truly useful: full reports, safety, basic archive.
+- PRO expands time horizon, depth, and export options, but does not introduce dark patterns or dependencies.
+
+In B2B / enterprise:
+
+- clear separation between PatternsLab, Portal, and Engine,
+- safety and compliance capabilities are **foundational**, not “premium add‑ons”.
+
+***
+
+## Summary
+
+SILENCE.OBJECTS is not another wellbeing app. It is **infrastructure** for non‑clinical, structural analysis of behavioral patterns in an environment of neurodiversity and information overload.
+
+The open‑core model gives:
+
+- low customer acquisition cost via community and research adoption,
+- high barriers to entry due to deeply integrated compliance and language sterility,
+- scalable revenue through three monetization tiers with clear upgrade paths.
+
+Full product, safety, AI, runtime, and monetization specifications are maintained in this repository and can be explored in more depth by investors and partners. On request, we also provide extended documentation packages and model contracts (e.g., for enterprise and academic deployments) under appropriate agreements.
