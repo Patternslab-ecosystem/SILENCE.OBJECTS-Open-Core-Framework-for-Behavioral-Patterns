@@ -1,13 +1,38 @@
+
 # SILENCE.OBJECTS — Open‑Core Framework for Behavioral Patterns
 
-SILENCE.OBJECTS to framework do **strukturalnej analizy wzorców zachowania jako systemów**, zbudowany w modelu **open‑core + enterprise Engine**.  
-Publiczne repozytorium zawiera wszystko, czego potrzebuje zespół developerski lub researchowy, aby pracować z danymi behawioralnymi w sposób bezpieczny, powtarzalny i zgodny z regulacjami – bez wchodzenia w obszar diagnozy klinicznej.
+**To repozytorium zawiera publiczną, open‑core implementację frameworka SILENCE.OBJECTS oraz jego publiczne kontrakty.**  
+Wszystkie moduły i aplikacje znajdujące się tutaj są dostępne na licencji MIT i mogą być swobodnie używane, modyfikowane i rozwijane przez społeczność, researcherów i firmy.
+
+Moduły **enterprise** (SILENCE Engine, Portal, pełna warstwa monetyzacji, zaawansowane bezpieczeństwo, compliance i runtime) są rozwijane w **oddzielnym, prywatnym monorepo** i udostępniane wyłącznie na warunkach komercyjnych – dla klientów instytucjonalnych i partnerów strategicznych.
+
+---
+
+## Zakres publicznego repozytorium
+
+Publiczna część SILENCE.OBJECTS obejmuje:
+
+- **Open‑core packages (`@silence/*`)** – wszystkie moduły niezbędne do pracy z danymi behawioralnymi w sposób bezpieczny i zgodny z regulacjami (lista poniżej).
+- **Referencyjną aplikację PatternLens (`apps/patternlens`)** – przykład użycia frameworka w praktyce (B2C, voice‑first, offline‑first).
+- **Komplet dokumentacji kontraktów i zasad**:
+  - `00-CONTRACT.md` – definiuje obiekt, 4 fazy analizy i stanowczo oddziela analizę od diagnozy.
+  - `01-LANGUAGE.md` oraz S11 – system sterylności językowej (zakaz terminów klinicznych, język strukturalny).
+  - `02-SAFETY.md`, `02/03-AI-CONTRACT.md`, `03-RUNTIME-MODES.md` – kontrakty bezpieczeństwa i tryby pracy AI.
+  - `04-MONETIZATION.md`, `04-PRODUCT-RULES.md` – otwarte zasady monetyzacji (bez implementacji billingowej).
+  - `05-PATTERNSLAB-PROFILE.md` – profil warstwy badawczej PatternsLab.
+
+**Czego NIE ma w tym repozytorium (moduły enterprise):**
+
+- `@silence/ee-behavioral-engine`, `@silence/ee-ai`, `@silence/ee-predictive`, `@silence/ee-intervention-timing`
+- `@silence/ee-safety`, `@silence/ee-medical`, `@silence/ee-legal`, `@silence/ee-audit`
+- `@silence/ee-analytics-dashboard`, `@silence/ee-billing`, `@silence/ee-orchestrator`, `@silence/ee-linkedin-agent`
+- Portal, PatternsLab w wersji produkcyjnej, konfiguracje środowiskowe i pełne reguły RLS.
+
+Wszystkie wymienione wyżej elementy są opisane w dokumentacji, ale ich implementacja pozostaje zamknięta i dostępna wyłącznie w modelu enterprise.
 
 ---
 
 ## Co jest w tym repo (scope)
-
-To repozytorium obejmuje **warstwę open‑core** oraz referencyjną aplikację klienta:
 
 ### Open‑core packages (`@silence/*`) – MIT
 
@@ -158,3 +183,5 @@ napisz do nas – chętnie porozmawiamy o współpracy.
 
 **Licencja:** MIT (dla open‑core).  
 **Status projektu:** aktywny rozwój, stabilny fundament open‑core, warstwa enterprise dostępna dla partnerów.
+```
+
