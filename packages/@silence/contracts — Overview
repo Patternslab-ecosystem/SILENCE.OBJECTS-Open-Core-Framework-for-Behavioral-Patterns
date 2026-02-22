@@ -1,87 +1,47 @@
-...
-Wersja: 1.0
-Rola: centralny kontrakt typów i eventów (Single Source of Truth) dla całego ekosystemu SILENCE.OBJECTS.​
+Below is an English version you can drop into the main page (e.g. under a `@silence/contracts` section in README).
 
-@silence/contracts dostarcza wspólne typy i kontrakty (TypeScript) dla Objectów, eventów, profili uwagi i metryk, używane we wszystkich aplikacjach (apps/*), modułach open‑core (@silence/*) oraz w SILENCE Engine (ee/*). Moduł nie zawiera logiki biznesowej – to wyłącznie warstwa kontraktów, która utrzymuje spójność między PatternLens, PatternsLab, Portalem i warstwą enterprise.
-Cel modułu
+***
 
-    Definiuje wspólne typy (TypeScript) dla:
+## @silence/contracts — Overview
 
-        Objectów (wejście do analizy 4‑fazowej),
+Version: 1.0  
+Role: central type and event contract (Single Source of Truth) for the entire SILENCE.OBJECTS ecosystem.
 
-        eventów (telemetria, crisis, consent, paywall),
+### Module purpose
 
-        profili (profil użytkownika, profile uwagi, runtime profile),
+- Defines **shared TypeScript types** for:
+  - Objects, events, attention profiles, metrics, and related structures.
+- Acts as the single place from which:
+  - applications (`apps/*`), open‑core modules, and Engine modules (`ee/*`) import their types.
+- Contains no business logic, only **contracts**:
+  - interfaces, enums, type aliases.
 
-        metryk i sygnałów strukturalnych.
+### Package structure
 
-    Jest jedynym miejscem, z którego:
+`packages/@silence/contracts/`
 
-        importują typy zarówno aplikacje (apps/*), jak i moduły open‑core oraz Engine (ee/*).​
+- `src/index.ts` – public barrel export for all types.
+- `src/events.ts` – event definitions (e.g. `BehavioralEvent`, `WearableEvent`, `ConsentEvent`).
+- `src/objects.ts` – Object structure (entry point for PatternLens / PatternsLab).
+- `src/profiles.ts` – attention profiles and UI configuration types.
+- `src/metrics.ts` – core metric / signal types.
 
-    Zapewnia zgodność z kontraktem frameworka:
+### Usage rules
 
-        Object ≠ osoba (to zawsze jednostka zapisu doświadczenia),​
+- All other packages:
+  - depend on `@silence/contracts` via `"@silence/contracts": "workspace:*"`.
+- **No duplication** of types in other packages:
+  - if you need a new type, add it here and release a new version of `@silence/contracts`.
+- The module must not introduce language that violates S11:
+  - type and field names must stay structural (pattern, cycle, tension, attentionProfile), with no clinical terminology.
 
-        Analiza = hipoteza strukturalna, nie fakt ani diagnoza.​
+### Minimal starter code (`index.ts`)
 
-Struktura pakietu
-
-Ścieżka w monorepo:
-
-text
-packages/@silence/contracts/
-
-Proponowana struktura plików:
-
-    src/index.ts – publiczny eksport wszystkich typów.
-
-    src/objects.ts – struktura Objectów i interpretacji (wejście do PatternLens / PatternsLab).
-
-    src/events.ts – kontrakty eventów (m.in. ObjectCreatedEvent, InterpretationGeneratedEvent, CrisisDetectedEvent, ConsentGivenEvent).
-
-    src/profiles.ts – profile użytkownika, profile uwagi, runtime profile dla Engine.
-
-    src/metrics.ts – podstawowe typy metryk / sygnałów (capacity, napięcia, rytmy, wskaźniki jakości).[*]
-
-* metrics.ts możesz wypełnić w kolejnym kroku – ważne, żeby plik istniał i był eksportowany z index.ts.
-Zasady użycia
-
-    Wszystkie inne pakiety w monorepo:
-
-        deklarują zależność przez "@silence/contracts": "workspace:*".​
-
-    Zakaz duplikowania typów w innych paczkach:
-
-        jeśli potrzebujesz nowego typu → dodaj go w @silence/contracts i wydaj nową wersję (zaktualizuj changelog / Technical File).​
-
-    Zgodność z S11:
-
-        nazwy typów i pól muszą być strukturalne (pattern, cycle, tension, attentionProfile, capacity),
-
-        unikasz terminologii klinicznej (depression, ADHD, diagnosis, itp.) – to jest wymóg polityki językowej S11.​
-
-    Zgodność z CONTRACT:
-
-        typy odzwierciedlają 4‑fazowy model analizy (Context, Tension, Meaning, Function) oraz dual‑lens (External / Internal), ale nie dodają kategorii „patologii” ani ocen zdrowia.​
-
-Minimalny kod startowy (src/index.ts)
-
-Na start wystarczy:
-
-ts
+```ts
 // packages/@silence/contracts/src/index.ts
 
 export * from "./objects";
 export * from "./events";
 export * from "./profiles";
 export * from "./metrics";
-
-Dzięki temu:
-
-    PatternLens, PatternsLab i Engine mogą od razu importować typy z jednego miejsca (@silence/contracts),
-
-    pnpm workspace widzi pakiet jako pełnoprawny moduł (brak błędów PKG_NOT_FOUND),​
-
-    dalsze rozszerzenia (np. nowe metryki, nowe typy eventów) są dodawane w jednym, kanonicznym miejscu.
-
+```
