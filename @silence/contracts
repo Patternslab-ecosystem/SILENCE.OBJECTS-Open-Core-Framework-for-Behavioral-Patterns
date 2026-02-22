@@ -1,0 +1,47 @@
+Below is an English version you can drop into the main page (e.g. under a `@silence/contracts` section in README).
+
+***
+
+## @silence/contracts — Overview
+
+Version: 1.0  
+Role: central type and event contract (Single Source of Truth) for the entire SILENCE.OBJECTS ecosystem.
+
+### Module purpose
+
+- Defines **shared TypeScript types** for:
+  - Objects, events, attention profiles, metrics, and related structures.
+- Acts as the single place from which:
+  - applications (`apps/*`), open‑core modules, and Engine modules (`ee/*`) import their types.
+- Contains no business logic, only **contracts**:
+  - interfaces, enums, type aliases.
+
+### Package structure
+
+`packages/@silence/contracts/`
+
+- `src/index.ts` – public barrel export for all types.
+- `src/events.ts` – event definitions (e.g. `BehavioralEvent`, `WearableEvent`, `ConsentEvent`).
+- `src/objects.ts` – Object structure (entry point for PatternLens / PatternsLab).
+- `src/profiles.ts` – attention profiles and UI configuration types.
+- `src/metrics.ts` – core metric / signal types.
+
+### Usage rules
+
+- All other packages:
+  - depend on `@silence/contracts` via `"@silence/contracts": "workspace:*"`.
+- **No duplication** of types in other packages:
+  - if you need a new type, add it here and release a new version of `@silence/contracts`.
+- The module must not introduce language that violates S11:
+  - type and field names must stay structural (pattern, cycle, tension, attentionProfile), with no clinical terminology.
+
+### Minimal starter code (`index.ts`)
+
+```ts
+// packages/@silence/contracts/src/index.ts
+
+export * from "./objects";
+export * from "./events";
+export * from "./profiles";
+export * from "./metrics";
+```
