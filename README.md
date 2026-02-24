@@ -1,4 +1,4 @@
-# 🤫 SILENCE.OBJECTS Monorepo
+# 🤫 SILENCE.OBJECTS-Open-Core-Framework-for-Behavioral-Patterns
 
 > **Pattern Intelligence for the Neurodivergent Era.**
 > Redesign the day, not the human.
